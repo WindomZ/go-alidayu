@@ -3,7 +3,7 @@
 ## Overview
 
 * 基于最新阿里大鱼API
-* 提供了轻量化的并发队列
+* 提供了简单轻量化的并发队列
 * 方便自行封装
 
 # Getting Started
@@ -24,6 +24,7 @@ go get -u github.com/WindomZ/go-alidayu
 * 语音双呼、文本转语音通知、语音通知及短信发送记录查询的测试用例
 * 简洁方便的文档
 * 更方便封装实例
+* 反馈回调支持
 
 ## LICENSE
 
