@@ -22,11 +22,11 @@ func post(arg interface{}) (success bool, response string) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.ContentLength = size
 	resp, err := (&http.Client{}).Do(req)
-	defer resp.Body.Close()
 	if err != nil {
 		response = err.Error()
 		return
 	}
+	defer resp.Body.Close()
 	data, _ := ioutil.ReadAll(resp.Body)
 	response = string(data)
 	success = strings.Contains(response, "success")

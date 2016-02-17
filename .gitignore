@@ -25,3 +25,6 @@ _testmain.go
 
 # idea
 .idea/
+
+# test
+my_test/
