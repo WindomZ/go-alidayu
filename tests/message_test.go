@@ -1,14 +1,36 @@
 package alidayu
 
 import (
+	"fmt"
 	. "github.com/WindomZ/go-alidayu"
 	"strconv"
 	"testing"
 )
 
+// 构建回调接口
+type CallBack struct {
+}
+
+func (cb *CallBack) CALLBACK_Check(msg interface{}) bool {
+	println(fmt.Sprintf("CALLBACK_Check: %#v", msg))
+	return true
+}
+
+func (cb *CallBack) CALLBACK_Request(msg interface{}) bool {
+	println(fmt.Sprintf("CALLBACK_Request: %#v", msg))
+	return true
+}
+
+func (cb *CallBack) CALLBACK_Response(msg interface{}, ok bool, result string) {
+	println(fmt.Sprintf("CALLBACK_Response: %#v", msg))
+	println(fmt.Sprintf("CALLBACK_Response: %v", ok))
+	println(fmt.Sprintf("CALLBACK_Response: %v", result))
+}
+
 // 测试单条短信发送
 func Test_Send_Message(t *testing.T) {
 	StartAlidayu(1, 10)
+	SetCallback(&CallBack{}) // 设置回调接口
 
 	msg := NewMessageSms(testSign)
 	msg.SetTel(testTel)

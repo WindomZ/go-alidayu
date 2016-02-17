@@ -49,6 +49,11 @@ func (s *Postbox) Close() error {
 	return nil
 }
 
+func (s *Postbox) SetCallback(callback CALLBACK) *Postbox {
+	s.Callback = callback
+	return s
+}
+
 func (s *Postbox) isRunning() bool {
 	return s.enable
 }
@@ -76,6 +81,9 @@ func (s *Postbox) IsFull() bool {
 func (s *Postbox) StuffMessage(msg interface{}) error {
 	if msg == nil {
 		return ERR_MESSAGE_NIL
+	}
+	if s.Callback != nil && !s.Callback.CALLBACK_Check(msg) {
+		return ERR_NOT_PASS_CHECK
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()

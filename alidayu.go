@@ -33,6 +33,12 @@ func CloseAlidayu(waitSeconds int) (err error) {
 	return nil
 }
 
+func SetCallback(callback CALLBACK) {
+	if postbox != nil {
+		postbox.SetCallback(callback)
+	}
+}
+
 func SendMessage(msg interface{}) error {
 	if postbox != nil && msg != nil {
 		return postbox.StuffMessage(msg)

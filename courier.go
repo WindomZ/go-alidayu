@@ -39,14 +39,16 @@ func (s *Courier) SendMessage(msg interface{}, callback CALLBACK) {
 	if s.work() {
 		go s.working(msg, callback)
 	} else if callback != nil {
-		callback(msg, false, ERR_COURIER_BUSY.Error())
+		callback.CALLBACK_Response(msg, false, ERR_COURIER_BUSY.Error())
 	}
 }
 
 func (s *Courier) working(msg interface{}, callback CALLBACK) {
 	defer s.rest()
-	ok, resp := post(msg)
-	if callback != nil {
-		callback(msg, ok, resp)
+	if callback == nil {
+		post(msg)
+	} else if callback.CALLBACK_Request(msg) {
+		ok, resp := post(msg)
+		callback.CALLBACK_Response(msg, ok, resp)
 	}
 }
