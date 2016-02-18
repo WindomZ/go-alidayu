@@ -24,12 +24,12 @@ import (
 	. "github.com/WindomZ/go-alidayu"
 )
 func main() {
-	InitAlidayu(true, "12345678", "88888888888888888888888888888888")
-	StartAlidayu(1, 1)              // 设置队列大小
+	InitAlidayu(true, "12345678", "88888888888888888888888888888888") // 初始化服务， 配置Key和Secret
+	StartAlidayu(1, 1)              // 设置队列参数， 开启服务
 	msg := NewMessageSms("身份验证") // 构建验证短信
 	msg.SetTel("13088888888").
 		SetContent("SMS_1234567", map[string]string{"code": "1", "product": "2"})
-	if err := SendMessage(msg); err != nil {
+	if err := SendMessage(msg); err != nil { // 发送短信
 		panic(err)
 	}
 	`...do somethings...`
