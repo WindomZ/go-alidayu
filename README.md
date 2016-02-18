@@ -16,7 +16,27 @@
 go get -u github.com/WindomZ/go-alidayu
 ```
 
-## Documentation 
+## Usage
+
+```go
+package main
+import (
+	. "github.com/WindomZ/go-alidayu"
+)
+func main() {
+	InitAlidayu(true, "12345678", "88888888888888888888888888888888")
+	StartAlidayu(1, 1)              // 设置队列大小
+	msg := NewMessageSms("身份验证") // 构建验证短信
+	msg.SetTel("13088888888").
+		SetContent("SMS_1234567", map[string]string{"code": "1", "product": "2"})
+	if err := SendMessage(msg); err != nil {
+		panic(err)
+	}
+	`...do somethings...`
+}
+```
+
+## Documentation
 
 可以先基于 *_test.go 进行了解
 (需要在`tests/init.go`中配置正确的API调用参数)
