@@ -27,6 +27,10 @@ func (cb *CallBack) CALLBACK_Response(msg interface{}, ok bool, result string) {
 	println(fmt.Sprintf("CALLBACK_Response: %v", result))
 }
 
+func (cb *CallBack) CALLBACK_Close() {
+	println("CALLBACK_Close")
+}
+
 // 测试单条短信发送
 func Test_Send_Message(t *testing.T) {
 	StartAlidayu(1, 10)

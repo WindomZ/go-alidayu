@@ -15,4 +15,6 @@ type CALLBACK interface {
 	// bool mean that fail to request alidayu API
 	// string is a result from alidayu API
 	CALLBACK_Response(interface{}, bool, string)
+
+	CALLBACK_Close()
 }

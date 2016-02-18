@@ -106,4 +106,7 @@ func (s *Postbox) service() {
 			}
 		}
 	}
+	if s.Callback != nil {
+		s.Callback.CALLBACK_Close()
+	}
 }
