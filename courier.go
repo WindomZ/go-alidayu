@@ -36,6 +36,9 @@ func (s *Courier) rest() {
 }
 
 func (s *Courier) SendMessage(msg interface{}, callback CALLBACK) {
+	if msg == nil {
+		return
+	}
 	if s.work() {
 		go s.working(msg, callback)
 	} else if callback != nil {

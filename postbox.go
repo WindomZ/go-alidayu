@@ -45,7 +45,7 @@ func (s *Postbox) Close() error {
 	if !s.isIdle() {
 		return ERR_POSTBOX_BUSY
 	}
-	s.barrel <- EmptyMessage()
+	s.barrel <- nil
 	return nil
 }
 
