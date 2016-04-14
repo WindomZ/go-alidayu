@@ -20,16 +20,24 @@ go get -u github.com/WindomZ/go-alidayu
 package main
 import . "github.com/WindomZ/go-alidayu"
 
-func main() {
+func init() {
 	InitAlidayu(true, "12345678", "88888888888888888888888888888888") // 初始化服务， 配置Key和Secret
-	StartAlidayu(1, 1)              // 设置队列参数， 开启服务
+	StartAlidayu(1, 1)                                                // 设置队列参数， 开启服务
+}
+
+func main() {
 	msg := NewMessageSms("身份验证") // 构建验证短信
-	msg.SetTel("13088888888").
-		SetContent("SMS_1234567", map[string]string{"code": "1", "product": "2"})
+	msg.SetTel("13088888888").SetContent(
+		"SMS_1234567",
+		map[string]string{
+			"code":    "1",
+			"product": "2",
+		},
+	)
 	if err := SendMessage(msg); err != nil { // 发送短信
 		panic(err)
 	}
-	`...doing something else...`
+	`...do somethings...`
 }
 ```
 
