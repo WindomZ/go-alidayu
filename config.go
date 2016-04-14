@@ -6,8 +6,8 @@ const (
 )
 
 const (
-	DEFAULT_COURIER_SIZE  int = 3
-	DEFAULT_CAPACITY_SIZE int = 10
+	DEFAULT_COURIER_SIZE  int = 3  // 默认线程数
+	DEFAULT_CAPACITY_SIZE int = 10 // 默认线程承载数量
 )
 
 var (
