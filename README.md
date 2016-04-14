@@ -8,8 +8,6 @@
 * 方便自行封装
 * 支持回调跟踪
 
-# Getting Started
-
 ## Installation
 
 ```bash
@@ -20,9 +18,8 @@ go get -u github.com/WindomZ/go-alidayu
 
 ```go
 package main
-import (
-	. "github.com/WindomZ/go-alidayu"
-)
+import . "github.com/WindomZ/go-alidayu"
+
 func main() {
 	InitAlidayu(true, "12345678", "88888888888888888888888888888888") // 初始化服务， 配置Key和Secret
 	StartAlidayu(1, 1)              // 设置队列参数， 开启服务
@@ -32,7 +29,7 @@ func main() {
 	if err := SendMessage(msg); err != nil { // 发送短信
 		panic(err)
 	}
-	`...do somethings...`
+	`...doing something else...`
 }
 ```
 
@@ -41,10 +38,12 @@ func main() {
 可以先基于 *_test.go 进行了解
 (需要在`tests/init.go`中配置正确的API调用参数)
 
+完善中...
+
 ## TODO
 
-* 语音双呼、文本转语音通知、语音通知的测试用例
 * 简洁方便的文档
+* 语音双呼、文本转语音通知、语音通知的测试用例
 * 提供封装实例方案
 * 更多阿里大鱼反馈支持
 
