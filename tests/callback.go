@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"testing"
-)
+import "testing"
 
 // 构建回调接口
 type CallBack struct {
@@ -20,9 +18,9 @@ func (cb *CallBack) CALLBACK_Request(msg interface{}) bool {
 }
 
 func (cb *CallBack) CALLBACK_Response(msg interface{}, ok bool, result string) {
-	cb.t.Logf("CALLBACK_Response: %#v", msg)
-	cb.t.Logf("CALLBACK_Response: %v", ok)
-	cb.t.Logf("CALLBACK_Response: %v", result)
+	cb.t.Logf("CALLBACK_Response: Msg > %#v", msg)
+	cb.t.Logf("CALLBACK_Response: OK > %v", ok)
+	cb.t.Logf("CALLBACK_Response: Result > %v", result)
 }
 
 func (cb *CallBack) CALLBACK_Close() {
