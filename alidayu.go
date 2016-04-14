@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"time"
-)
+import "time"
 
 var postbox *Postbox
 

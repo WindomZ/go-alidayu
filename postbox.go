@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"sync"
-)
+import "sync"
 
 type Postbox struct {
 	enable   bool

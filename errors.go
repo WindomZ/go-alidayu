@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"errors"
-)
+import "errors"
 
 var (
 	ERR_NOT_PASS_CHECK   error = errors.New("Not pass when check")

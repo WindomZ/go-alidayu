@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"sync"
-)
+import "sync"
 
 type Courier struct {
 	idle  bool

@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"time"
-)
+import "time"
 
 const (
 	MESSAGE_METHOD_DOUBLE    string = "alibaba.aliqin.fc.voice.num.doublecall"

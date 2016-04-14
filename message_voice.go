@@ -1,7 +1,5 @@
 package alidayu
 
-import ()
-
 type MessageVoice struct {
 	Message       `json:""`
 	CalledTel     string `json:"called_num"`

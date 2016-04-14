@@ -1,8 +1,6 @@
 package alidayu
 
-import (
-	"encoding/json"
-)
+import "encoding/json"
 
 type MessageTTS struct {
 	Message       `json:""`

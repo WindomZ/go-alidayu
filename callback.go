@@ -1,7 +1,5 @@
 package alidayu
 
-import ()
-
 type CALLBACK interface {
 	// Call when append to queue
 	// If return false will get error 'ERR_NOT_PASS_CHECK'
