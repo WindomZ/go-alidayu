@@ -7,8 +7,7 @@ import (
 
 // 测试查询短信发送信息
 func Test_Send_Message_Query(t *testing.T) {
-	StartAlidayu(1, 1)
-	SetCallback(&CallBack{t})
+	SetCallback(&CallBack{t}) //　设置测试回调，方便调试监控
 
 	msg := NewMessageQuery().SetTel(testTel).SetLast()
 	if err := SendMessage(msg); err != nil {
@@ -16,8 +15,7 @@ func Test_Send_Message_Query(t *testing.T) {
 	}
 
 	wait(10)
-	err := CloseAlidayu(10)
-	if err != nil {
+	if err := CloseAlidayu(10); err != nil {
 		t.Error(err)
 	}
 }

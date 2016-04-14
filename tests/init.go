@@ -17,7 +17,7 @@ func init() {
 	InitAlidayu(true, testKey, testSecret)
 }
 
-// 通过休眠阻塞等待服务完成， 等待时间至小1秒，最多(maxWaitSeconds + 1)秒
+// 通过休眠阻塞等待测试完成， 等待时间至小1秒，最多(maxWaitSeconds + 1)秒
 func wait(maxWaitSeconds int) {
 	for i := 0; i < maxWaitSeconds; i++ {
 		if IsIdle() {

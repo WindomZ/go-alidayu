@@ -2,7 +2,7 @@ package alidayu
 
 import "testing"
 
-// 构建回调接口
+// 构建回调接口，打印测试数据
 type CallBack struct {
 	t *testing.T
 }

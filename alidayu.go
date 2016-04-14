@@ -5,7 +5,7 @@ import "time"
 var postbox *Postbox
 
 // 初始化服务
-// prod:   是否生产环境
+// prod:   是否应用于正式环境
 // key:    alidayu账号分配给应用的AppKey
 // secret: alidayu账号分配给应用的AppSecret
 func InitAlidayu(prod bool, key, secret string) {
@@ -14,30 +14,39 @@ func InitAlidayu(prod bool, key, secret string) {
 	}
 	AppKey = key
 	AppSecret = secret
+	if postbox == nil {
+		SetAlidayuQueue(DEFAULT_COURIER_SIZE, DEFAULT_CAPACITY_SIZE)
+	}
 }
 
-// 开启服务
+// 设置服务队列
 // thread_count:   同时处理线程数
 // queue_capacity: 每个线程的承载数量能力
-func StartAlidayu(thread_count, queue_capacity int) {
+func SetAlidayuQueue(thread_count, queue_capacity int) {
 	postbox = NewPostbox(thread_count, queue_capacity).Start()
+}
+
+func closeAlidayu() error {
+	if postbox != nil {
+		return postbox.Close()
+	}
+	return nil
 }
 
 // 关闭服务
 // waitSeconds: 最大的等待时间
-func CloseAlidayu(waitSeconds int) (err error) {
-	if postbox != nil {
-		if waitSeconds > 0 {
-			for i := 0; i < waitSeconds; i++ {
-				if err = postbox.Close(); err == nil {
+func CloseAlidayu(waitSeconds ...int) error {
+	if len(waitSeconds) >= 1 {
+		if ws := waitSeconds[0]; ws > 0 {
+			for i := 0; i < ws; i++ {
+				if err := closeAlidayu(); err == nil {
 					return nil
 				}
 				time.Sleep(time.Second)
 			}
 		}
-		return postbox.Close()
 	}
-	return nil
+	return closeAlidayu()
 }
 
 // 设置回调
