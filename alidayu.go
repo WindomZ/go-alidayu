@@ -49,18 +49,35 @@ func CloseAlidayu(waitSeconds ...int) error {
 	return closeAlidayu()
 }
 
-// 发送信息
-func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
-	if postbox != nil {
-		return postbox.StuffMessage(msg, f...)
-	}
-	return ErrServiceClosed
-}
-
 // 服务是否闲置(一般用于测试)
 func IsIdle() bool {
 	if postbox != nil {
 		return postbox.IsIdle()
 	}
 	return true
+}
+
+// 默认发送信息
+func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
+	return SendMessageQueue(msg)
+}
+
+// 通过队列发送信息
+func SendMessageQueue(msg IMessage, f ...MessageErrorFunc) error {
+	if postbox != nil {
+		return postbox.StuffMessage(msg, f...)
+	}
+	return ErrServiceClosed
+}
+
+// 通过队列发送信息
+func SendMessageDirect(msg IMessage) error {
+	if msg == nil {
+		return ErrMessageNil
+	} else if err := msg.Error(); err != nil {
+		return err
+	} else if ok, resp := post(msg); !ok {
+		return NewAlidayuResponseError(resp)
+	}
+	return nil
 }
