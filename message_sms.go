@@ -15,7 +15,11 @@ type MessageSms struct {
 }
 
 func NewMessageSms(signName string) *MessageSms {
-	return &MessageSms{Message: *NewMessage(MESSAGE_METHOD_SMS), Type: "normal", FreeSignName: signName}
+	return &MessageSms{
+		Message:      *NewMessage(MESSAGE_METHOD_SMS),
+		Type:         "normal",
+		FreeSignName: signName,
+	}
 }
 
 func (s *MessageSms) SetTel(tel ...string) *MessageSms {

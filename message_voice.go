@@ -8,7 +8,9 @@ type MessageVoice struct {
 }
 
 func NewMessageVoice() *MessageVoice {
-	return &MessageVoice{Message: *NewMessage(MESSAGE_METHOD_VOICE)}
+	return &MessageVoice{
+		Message: *NewMessage(MESSAGE_METHOD_VOICE),
+	}
 }
 
 func (s *MessageVoice) SetCalledTel(tel string, show string) *MessageVoice {

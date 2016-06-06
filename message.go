@@ -34,21 +34,29 @@ type Message struct {
 	Err          error  `json:"-"`
 }
 
-func EmptyMessage() *Message {
-	return &Message{}
-}
-
 func NewMessage(method string) *Message {
-	msg := EmptyMessage()
-	msg.Method = method
-	msg.AppKey = AppKey
-	msg.Timestamp = time.Now().Format("2006-01-02 15:04:05")
-	msg.Format = MESSAGE_FORMAT_JSON
-	msg.Version = "2.0"
-	msg.SignMethod = MESSAGE_SIGN_METHOD_MD5
-	return msg
+	return &Message{
+		Method:     method,
+		AppKey:     AppKey,
+		Timestamp:  time.Now().Format("2006-01-02 15:04:05"),
+		Format:     MESSAGE_FORMAT_JSON,
+		Version:    "2.0",
+		SignMethod: MESSAGE_SIGN_METHOD_MD5,
+	}
 }
 
-func (s *Message) Valid() bool {
-	return (s.Err == nil)
+type EnvelopeErrorFunc func(*Message, error) bool
+
+type Envelope struct {
+	Message   *Message
+	TryCount  int
+	ErrorFunc EnvelopeErrorFunc
+}
+
+func NewEnvelope(msg *Message, f EnvelopeErrorFunc) *Envelope {
+	return &Envelope{
+		Message:   msg,
+		TryCount:  0,
+		ErrorFunc: f,
+	}
 }

@@ -9,7 +9,9 @@ type MessageDouble struct {
 }
 
 func NewMessageDouble() *MessageDouble {
-	return &MessageDouble{Message: *NewMessage(MESSAGE_METHOD_DOUBLE)}
+	return &MessageDouble{
+		Message: *NewMessage(MESSAGE_METHOD_DOUBLE),
+	}
 }
 
 func (s *MessageDouble) SetCallerTel(tel string, show string) *MessageDouble {

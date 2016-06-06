@@ -11,7 +11,9 @@ type MessageTTS struct {
 }
 
 func NewMessageTTS() *MessageTTS {
-	return &MessageTTS{Message: *NewMessage(MESSAGE_METHOD_TTS)}
+	return &MessageTTS{
+		Message: *NewMessage(MESSAGE_METHOD_TTS),
+	}
 }
 
 func (s *MessageTTS) SetCalledTel(tel string, show string) *MessageTTS {
