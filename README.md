@@ -34,10 +34,13 @@ func main() {
 				"product": "2",
 			},
 		)
-	// 发送短信
-	if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
-		`...do somethings when callback...`
+	// 异步发送短信
+    if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
     }); err != nil {
+    	panic(err)
+    }
+    // Or 同步发送短信
+    if err := SendMessageDirect(msg); err != nil {
     	panic(err)
     }
 	`...do other things...`
