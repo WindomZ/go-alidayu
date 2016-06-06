@@ -75,9 +75,11 @@ func (s *Postbox) IsFull() bool {
 	return s.isFull()
 }
 
-func (s *Postbox) StuffMessage(msg interface{}, f ...MessageErrorFunc) error {
+func (s *Postbox) StuffMessage(msg IMessage, f ...MessageErrorFunc) error {
 	if msg == nil {
 		return ERR_MESSAGE_NIL
+	} else if err := msg.Error(); err != nil {
+		return err
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()

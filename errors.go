@@ -12,6 +12,12 @@ var (
 	ERR_COURIER_BUSY           = errors.New("goalidayu: Courier is busy")
 )
 
+var (
+	ErrMessageMethod     error = errors.New("goalidayu: Invalid message method")
+	ErrMessageFormat           = errors.New("goalidayu: Invalid message format")
+	ErrMessageSignMethod       = errors.New("goalidayu: Invalid message sign method")
+)
+
 func NewAlidayuResponseError(response string) error {
 	return errors.New("goalidayu: " + response)
 }

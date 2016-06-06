@@ -3,36 +3,33 @@ package alidayu
 type MessageErrorFunc func(interface{}, int, error)
 
 type Envelope struct {
-	Message   interface{}
-	TryCount  int
+	Message   IMessage
 	ErrorFunc MessageErrorFunc
 }
 
-func NewEnvelope(msg interface{}, f MessageErrorFunc) *Envelope {
+func NewEnvelope(msg IMessage, f MessageErrorFunc) *Envelope {
 	return &Envelope{
 		Message:   msg,
-		TryCount:  0,
 		ErrorFunc: f,
 	}
 }
 
-func (e *Envelope) Increase() *Envelope {
-	e.TryCount++
-	return e
+func (e *Envelope) Error() error {
+	return e.Message.Error()
 }
 
-func (e *Envelope) Valid() bool {
-	return e.Message != nil
+func (e *Envelope) Increase() int {
+	return e.Message.Increase()
 }
 
 func (e *Envelope) SuccessToSend() {
 	if e.ErrorFunc != nil {
-		e.ErrorFunc(e.Message, e.TryCount, nil)
+		e.ErrorFunc(e.Message, e.Increase(), nil)
 	}
 }
 
 func (e *Envelope) FailToSend(err error) {
 	if e.ErrorFunc != nil {
-		e.ErrorFunc(e.Message, e.TryCount, err)
+		e.ErrorFunc(e.Message, e.Increase(), err)
 	}
 }

@@ -50,7 +50,7 @@ func CloseAlidayu(waitSeconds ...int) error {
 }
 
 // 发送信息
-func SendMessage(msg interface{}, f ...MessageErrorFunc) error {
+func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
 	if postbox != nil {
 		return postbox.StuffMessage(msg, f...)
 	}

@@ -48,7 +48,7 @@ func (s *Courier) SendEnvelope(e *Envelope) {
 
 func (s *Courier) working(e *Envelope) {
 	defer s.rest()
-	if ok, resp := post(e.Increase().Message); ok {
+	if ok, resp := post(e.Message); ok {
 		e.SuccessToSend()
 	} else {
 		e.FailToSend(NewAlidayuResponseError(resp))
