@@ -35,10 +35,12 @@ func main() {
 			},
 		)
 	// 发送短信
-	if err := SendMessage(msg); err != nil {
-		panic(err)
-	}
-	`...do somethings...`
+	if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
+		`...do somethings when callback...`
+    }); err != nil {
+    	panic(err)
+    }
+	`...do other things...`
 }
 ```
 
