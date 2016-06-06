@@ -8,8 +8,6 @@ import (
 
 // 测试单条短信发送
 func Test_Send_Message(t *testing.T) {
-	SetCallback(&CallBack{t}) //　设置测试回调，方便调试监控
-
 	msg := NewMessageSms(testSign).SetTel(testTel).
 		SetContent(
 			testCode,
@@ -19,7 +17,13 @@ func Test_Send_Message(t *testing.T) {
 			},
 		)
 
-	if err := SendMessage(msg); err != nil {
+	if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
+		if err != nil {
+			t.Errorf("FAIL(%v): %#v > %v", cnt, msg, err)
+		} else {
+			t.Logf("SUCC(%v): %#v", cnt, msg)
+		}
+	}); err != nil {
 		t.Error(err)
 	}
 
@@ -40,7 +44,13 @@ func Test_Send_Messages(t *testing.T) {
 					"product": "【Test_Send_Messages】",
 				},
 			)
-		if err := SendMessage(msg); err != nil {
+		if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
+			if err != nil {
+				t.Errorf("FAIL(%v): %#v > %v", cnt, msg, err)
+			} else {
+				t.Logf("SUCC(%v): %#v", cnt, msg)
+			}
+		}); err != nil {
 			t.Error(err)
 		}
 	}

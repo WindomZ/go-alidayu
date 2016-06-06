@@ -7,10 +7,14 @@ import (
 
 // 测试查询短信发送信息
 func Test_Send_Message_Query(t *testing.T) {
-	SetCallback(&CallBack{t}) //　设置测试回调，方便调试监控
-
 	msg := NewMessageQuery().SetTel(testTel).SetLast()
-	if err := SendMessage(msg); err != nil {
+	if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
+		if err != nil {
+			t.Errorf("FAIL(%v): %#v > %v", cnt, msg, err)
+		} else {
+			t.Logf("SUCC(%v): %#v", cnt, msg)
+		}
+	}); err != nil {
 		t.Error(err)
 	}
 
