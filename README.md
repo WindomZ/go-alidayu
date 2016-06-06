@@ -35,7 +35,7 @@ func main() {
 			},
 		)
 	// 异步发送短信
-    if err := SendMessage(msg, func(msg interface{}, cnt int, err error) {
+    if err := SendMessageQueue(msg, func(msg interface{}, cnt int, err error) {
     }); err != nil {
     	panic(err)
     }
