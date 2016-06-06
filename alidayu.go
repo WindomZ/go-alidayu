@@ -49,19 +49,12 @@ func CloseAlidayu(waitSeconds ...int) error {
 	return closeAlidayu()
 }
 
-// 设置回调
-func SetCallback(callback CALLBACK) {
-	if postbox != nil {
-		postbox.SetCallback(callback)
-	}
-}
-
 // 发送信息
-func SendMessage(msg interface{}) error {
-	if postbox != nil && msg != nil {
-		return postbox.StuffMessage(msg)
+func SendMessage(msg interface{}, f ...MessageErrorFunc) error {
+	if postbox != nil {
+		return postbox.StuffMessage(msg, f...)
 	}
-	return nil
+	return ERR_SERVICE_CLOSED
 }
 
 // 服务是否闲置(一般用于测试)

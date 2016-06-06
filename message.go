@@ -44,19 +44,3 @@ func NewMessage(method string) *Message {
 		SignMethod: MESSAGE_SIGN_METHOD_MD5,
 	}
 }
-
-type EnvelopeErrorFunc func(*Message, error) bool
-
-type Envelope struct {
-	Message   *Message
-	TryCount  int
-	ErrorFunc EnvelopeErrorFunc
-}
-
-func NewEnvelope(msg *Message, f EnvelopeErrorFunc) *Envelope {
-	return &Envelope{
-		Message:   msg,
-		TryCount:  0,
-		ErrorFunc: f,
-	}
-}

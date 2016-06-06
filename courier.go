@@ -8,7 +8,10 @@ type Courier struct {
 }
 
 func NewCourier() *Courier {
-	return &Courier{idle: true, mutex: &sync.Mutex{}}
+	return &Courier{
+		idle:  true,
+		mutex: &sync.Mutex{},
+	}
 }
 
 func (s *Courier) IsIdle() bool {
@@ -33,23 +36,21 @@ func (s *Courier) rest() {
 	s.idle = true
 }
 
-func (s *Courier) SendMessage(msg interface{}, callback CALLBACK) {
-	if msg == nil {
+func (s *Courier) SendEnvelope(e *Envelope) {
+	if e == nil {
 		return
-	}
-	if s.work() {
-		go s.working(msg, callback)
-	} else if callback != nil {
-		callback.CALLBACK_Response(msg, false, ERR_COURIER_BUSY.Error())
+	} else if s.work() {
+		go s.working(e)
+	} else {
+		e.FailToSend(ERR_COURIER_BUSY)
 	}
 }
 
-func (s *Courier) working(msg interface{}, callback CALLBACK) {
+func (s *Courier) working(e *Envelope) {
 	defer s.rest()
-	if callback == nil {
-		post(msg)
-	} else if callback.CALLBACK_Request(msg) {
-		ok, resp := post(msg)
-		callback.CALLBACK_Response(msg, ok, resp)
+	if ok, resp := post(e.Increase().Message); ok {
+		e.SuccessToSend()
+	} else {
+		e.FailToSend(NewAlidayuResponseError(resp))
 	}
 }

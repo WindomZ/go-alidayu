@@ -4,9 +4,8 @@ import "sync"
 
 type Postbox struct {
 	enable   bool
-	barrel   chan interface{}
+	barrel   chan *Envelope
 	Couriers []*Courier
-	Callback CALLBACK
 	Size     int
 	mutex    *sync.Mutex
 }
@@ -22,7 +21,12 @@ func NewPostbox(thread_count, queue_capacity int) *Postbox {
 	for i := 0; i < thread_count; i++ {
 		cs = append(cs, NewCourier())
 	}
-	return &Postbox{barrel: make(chan interface{}, queue_capacity), Couriers: cs, Size: queue_capacity, mutex: &sync.Mutex{}}
+	return &Postbox{
+		barrel:   make(chan *Envelope, queue_capacity),
+		Couriers: cs,
+		Size:     queue_capacity,
+		mutex:    &sync.Mutex{},
+	}
 }
 
 func (s *Postbox) Start() *Postbox {
@@ -45,11 +49,6 @@ func (s *Postbox) Close() error {
 	}
 	s.barrel <- nil
 	return nil
-}
-
-func (s *Postbox) SetCallback(callback CALLBACK) *Postbox {
-	s.Callback = callback
-	return s
 }
 
 func (s *Postbox) isRunning() bool {
@@ -76,12 +75,9 @@ func (s *Postbox) IsFull() bool {
 	return s.isFull()
 }
 
-func (s *Postbox) StuffMessage(msg interface{}) error {
+func (s *Postbox) StuffMessage(msg interface{}, f ...MessageErrorFunc) error {
 	if msg == nil {
 		return ERR_MESSAGE_NIL
-	}
-	if s.Callback != nil && !s.Callback.CALLBACK_Check(msg) {
-		return ERR_NOT_PASS_CHECK
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -89,8 +85,11 @@ func (s *Postbox) StuffMessage(msg interface{}) error {
 		return ERR_SERVICE_CLOSED
 	} else if s.isFull() {
 		return ERR_SERVICE_OVERFLOW
+	} else if f == nil || len(f) == 0 {
+		s.barrel <- NewEnvelope(msg, nil)
+	} else {
+		s.barrel <- NewEnvelope(msg, f[0])
 	}
-	s.barrel <- msg
 	return nil
 }
 
@@ -100,11 +99,8 @@ func (s *Postbox) service() {
 			if !s.isRunning() {
 				return
 			} else if courier.IsIdle() {
-				courier.SendMessage(<-s.barrel, s.Callback)
+				courier.SendEnvelope(<-s.barrel)
 			}
 		}
-	}
-	if s.Callback != nil {
-		s.Callback.CALLBACK_Close()
 	}
 }
