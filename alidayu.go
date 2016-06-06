@@ -62,7 +62,7 @@ func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
 	return SendMessageQueue(msg)
 }
 
-// 通过队列发送信息
+// 异步发送信息
 func SendMessageQueue(msg IMessage, f ...MessageErrorFunc) error {
 	if postbox != nil {
 		return postbox.StuffMessage(msg, f...)
@@ -70,7 +70,7 @@ func SendMessageQueue(msg IMessage, f ...MessageErrorFunc) error {
 	return ErrServiceClosed
 }
 
-// 通过队列发送信息
+// 同步发送信息
 func SendMessageDirect(msg IMessage) error {
 	if msg == nil {
 		return ErrMessageNil
