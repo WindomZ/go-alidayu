@@ -54,7 +54,7 @@ func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
 	if postbox != nil {
 		return postbox.StuffMessage(msg, f...)
 	}
-	return ERR_SERVICE_CLOSED
+	return ErrServiceClosed
 }
 
 // 服务是否闲置(一般用于测试)

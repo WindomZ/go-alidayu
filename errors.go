@@ -3,17 +3,16 @@ package alidayu
 import "errors"
 
 var (
-	ERR_NOT_PASS_CHECK   error = errors.New("goalidayu: Not pass when check")
-	ERR_NO_APP_KEY             = errors.New("goalidayu: Key and Secret must not be null!")
-	ERR_MESSAGE_NIL            = errors.New("goalidayu: Message must not be null!")
-	ERR_SERVICE_CLOSED         = errors.New("goalidayu: Service is closed!")
-	ERR_SERVICE_OVERFLOW       = errors.New("goalidayu: Service is overflow!")
-	ERR_POSTBOX_BUSY           = errors.New("goalidayu: Postbox is busy")
-	ERR_COURIER_BUSY           = errors.New("goalidayu: Courier is busy")
+	ErrNoAppKey        error = errors.New("goalidayu: Key and Secret must not be null!")
+	ErrServiceClosed         = errors.New("goalidayu: Service is closed!")
+	ErrServiceOverflow       = errors.New("goalidayu: Service is overflow!")
+	ErrPostboxBusy           = errors.New("goalidayu: Postbox is busy")
+	ErrCourierBusy           = errors.New("goalidayu: Courier is busy")
 )
 
 var (
-	ErrMessageMethod     error = errors.New("goalidayu: Invalid message method")
+	ErrMessageNil        error = errors.New("goalidayu: Message must not be null!")
+	ErrMessageMethod           = errors.New("goalidayu: Invalid message method")
 	ErrMessageFormat           = errors.New("goalidayu: Invalid message format")
 	ErrMessageSignMethod       = errors.New("goalidayu: Invalid message sign method")
 )

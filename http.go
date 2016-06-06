@@ -15,7 +15,7 @@ import (
 
 func post(arg interface{}) (success bool, response string) {
 	if AppKey == "" || AppSecret == "" {
-		return false, ERR_NO_APP_KEY.Error()
+		return false, ErrNoAppKey.Error()
 	}
 	body, size := getRequestBody(arg)
 	req, _ := http.NewRequest("POST", AppURL, body)

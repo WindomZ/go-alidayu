@@ -42,7 +42,7 @@ func (s *Courier) SendEnvelope(e *Envelope) {
 	} else if s.work() {
 		go s.working(e)
 	} else {
-		e.FailToSend(ERR_COURIER_BUSY)
+		e.FailToSend(ErrCourierBusy)
 	}
 }
 

@@ -45,7 +45,7 @@ func (s *Postbox) Close() error {
 	defer s.mutex.Unlock()
 	s.enable = false
 	if !s.isIdle() {
-		return ERR_POSTBOX_BUSY
+		return ErrPostboxBusy
 	}
 	s.barrel <- nil
 	return nil
@@ -77,16 +77,16 @@ func (s *Postbox) IsFull() bool {
 
 func (s *Postbox) StuffMessage(msg IMessage, f ...MessageErrorFunc) error {
 	if msg == nil {
-		return ERR_MESSAGE_NIL
+		return ErrMessageNil
 	} else if err := msg.Error(); err != nil {
 		return err
 	}
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	if !s.isRunning() {
-		return ERR_SERVICE_CLOSED
+		return ErrServiceClosed
 	} else if s.isFull() {
-		return ERR_SERVICE_OVERFLOW
+		return ErrServiceOverflow
 	} else if f == nil || len(f) == 0 {
 		s.barrel <- NewEnvelope(msg, nil)
 	} else {
