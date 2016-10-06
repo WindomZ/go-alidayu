@@ -4,7 +4,7 @@ import "time"
 
 var postbox *Postbox
 
-// 初始化服务
+// InitAlidayu 初始化服务
 // prod:   是否应用于正式环境
 // key:    alidayu账号分配给应用的AppKey
 // secret: alidayu账号分配给应用的AppSecret
@@ -19,13 +19,14 @@ func InitAlidayu(prod bool, key, secret string) {
 	}
 }
 
-// 设置服务队列
+// SetAlidayuQueue 设置服务队列
 // thread_count:   同时处理线程数
 // queue_capacity: 每个线程的承载数量能力
 func SetAlidayuQueue(thread_count, queue_capacity int) {
 	postbox = NewPostbox(thread_count, queue_capacity).Start()
 }
 
+// closeAlidayu 关闭服务
 func closeAlidayu() error {
 	if postbox != nil {
 		return postbox.Close()
@@ -33,7 +34,7 @@ func closeAlidayu() error {
 	return nil
 }
 
-// 关闭服务
+// CloseAlidayu 关闭服务
 // waitSeconds: 最大的等待时间
 func CloseAlidayu(waitSeconds ...int) error {
 	if len(waitSeconds) >= 1 {
@@ -49,7 +50,7 @@ func CloseAlidayu(waitSeconds ...int) error {
 	return closeAlidayu()
 }
 
-// 服务是否闲置(一般用于测试)
+// IsIdle 服务是否闲置(一般用于测试)
 func IsIdle() bool {
 	if postbox != nil {
 		return postbox.IsIdle()
@@ -57,12 +58,14 @@ func IsIdle() bool {
 	return true
 }
 
-// 默认发送信息
+// SendMessage 默认发送信息
+// 基于SetAlidayuQueue的设置，与SendMessageQueue相同
 func SendMessage(msg IMessage, f ...MessageErrorFunc) error {
 	return SendMessageQueue(msg)
 }
 
-// 异步发送信息
+// SendMessageQueue 异步发送信息
+// 异步发送信息，基于SetAlidayuQueue的设置队列处理
 func SendMessageQueue(msg IMessage, f ...MessageErrorFunc) error {
 	if postbox != nil {
 		return postbox.StuffMessage(msg, f...)
@@ -70,7 +73,8 @@ func SendMessageQueue(msg IMessage, f ...MessageErrorFunc) error {
 	return ErrServiceClosed
 }
 
-// 同步发送信息
+// SendMessageDirect 同步发送信息
+// 直接发送信息，尝试一次返回结果
 func SendMessageDirect(msg IMessage) error {
 	if msg == nil {
 		return ErrMessageNil

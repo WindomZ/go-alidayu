@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// MessageSms 短信发送
 type MessageSms struct {
 	Message      `json:""`
 	Type         string `json:"sms_type"`
@@ -14,6 +15,7 @@ type MessageSms struct {
 	TemplateCode string `json:"sms_template_code"`
 }
 
+// NewMessageSms 创建短信发送
 func NewMessageSms(signName string) *MessageSms {
 	return &MessageSms{
 		Message:      *NewMessage(MESSAGE_METHOD_SMS),
@@ -22,6 +24,7 @@ func NewMessageSms(signName string) *MessageSms {
 	}
 }
 
+// SetTel 设置短信接收方的电话号码
 func (s *MessageSms) SetTel(tel ...string) *MessageSms {
 	if len(tel) == 1 {
 		s.Tel = tel[0]
@@ -31,6 +34,7 @@ func (s *MessageSms) SetTel(tel ...string) *MessageSms {
 	return s
 }
 
+// SetContent 设置短信发送信息模板code及参数param
 func (s *MessageSms) SetContent(code string, param map[string]string) *MessageSms {
 	s.TemplateCode = code
 	data, err := json.Marshal(param)

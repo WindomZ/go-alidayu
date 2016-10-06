@@ -3,21 +3,21 @@ package alidayu
 import "time"
 
 const (
-	MESSAGE_METHOD_DOUBLE    string = "alibaba.aliqin.fc.voice.num.doublecall"
-	MESSAGE_METHOD_TTS              = "alibaba.aliqin.fc.tts.num.singlecall"
-	MESSAGE_METHOD_VOICE            = "alibaba.aliqin.fc.voice.num.singlecall"
-	MESSAGE_METHOD_SMS              = "alibaba.aliqin.fc.sms.num.send"
-	MESSAGE_METHOD_SMS_QUERY        = "alibaba.aliqin.fc.sms.num.query"
+	MESSAGE_METHOD_DOUBLE    string = "alibaba.aliqin.fc.voice.num.doublecall" // 多方通话
+	MESSAGE_METHOD_TTS              = "alibaba.aliqin.fc.tts.num.singlecall"   // 文本转语音通知
+	MESSAGE_METHOD_VOICE            = "alibaba.aliqin.fc.voice.num.singlecall" // 发送语音
+	MESSAGE_METHOD_SMS              = "alibaba.aliqin.fc.sms.num.send"         // 短信发送
+	MESSAGE_METHOD_SMS_QUERY        = "alibaba.aliqin.fc.sms.num.query"        // 短信发送记录查询
 )
 
 const (
-	MESSAGE_FORMAT_JSON string = "json"
-	MESSAGE_FORMAT_XML         = "xml"
+	MESSAGE_FORMAT_JSON string = "json" // 短信JSON参数，推荐
+	MESSAGE_FORMAT_XML         = "xml"  // 短信XML参数
 )
 
 const (
-	MESSAGE_SIGN_METHOD_HMAC string = "hmac"
-	MESSAGE_SIGN_METHOD_MD5         = "md5"
+	MESSAGE_SIGN_METHOD_HMAC string = "hmac" // 签名方式-HMAC
+	MESSAGE_SIGN_METHOD_MD5         = "md5"  // 签名方式-MD5
 )
 
 type IMessage interface {

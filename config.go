@@ -11,7 +11,7 @@ const (
 )
 
 var (
-	AppURL    string = URL_SANDBOX
-	AppKey    string
-	AppSecret string
+	AppURL    string = URL_SANDBOX // alidayu的api地址
+	AppKey    string               // alidayu的key
+	AppSecret string               // alidayu的secret
 )

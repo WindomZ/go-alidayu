@@ -2,6 +2,7 @@ package alidayu
 
 import "time"
 
+// MessageQuery 短信发送记录查询
 type MessageQuery struct {
 	Message     `json:""`
 	BizId       string `json:"biz_id"`
@@ -11,6 +12,7 @@ type MessageQuery struct {
 	PageSize    int64  `json:"page_size"`
 }
 
+// NewMessageQuery 创建短信发送记录查询
 func NewMessageQuery() *MessageQuery {
 	return &MessageQuery{
 		Message:     *NewMessage(MESSAGE_METHOD_SMS_QUERY),
@@ -19,13 +21,13 @@ func NewMessageQuery() *MessageQuery {
 		PageSize:    50}
 }
 
-// 设置查询的手机号码
+// SetTel 设置短信发送记录查询的手机号码
 func (s *MessageQuery) SetTel(tel string) *MessageQuery {
 	s.Tel = tel
 	return s
 }
 
-// 设置查询分页参数
+// SetPage 设置短信发送记录查询的分页参数
 func (s *MessageQuery) SetPage(current, size int64) *MessageQuery {
 	if current <= 0 {
 		current = 1
@@ -38,7 +40,7 @@ func (s *MessageQuery) SetPage(current, size int64) *MessageQuery {
 	return s
 }
 
-// 设置只获取最后一条的发送状态
+// SetLast 设置只获取短信发送记录查询的最后一条发送状态
 func (s *MessageQuery) SetLast() *MessageQuery {
 	return s.SetPage(1, 1)
 }
